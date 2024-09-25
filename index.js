@@ -1,4 +1,5 @@
 import GoogleStrategy from 'passport-google-oauth2';
+import TwitterStrategy from 'passport-twitter';
 import session from 'express-session';
 import bodyParser from 'body-parser';
 import passport from 'passport';
@@ -65,6 +66,21 @@ app.get(
   })
 );
 
+app.get(
+  '/auth/twitter',
+  passport.authenticate('twitter', {
+    scope: ['profile', 'email'],
+  })
+);
+
+app.get(
+  '/auth/twitter/dashboard',
+  passport.authenticate('twitter', {
+    successRedirect: '/dashboard',
+    failureRedirect: '/',
+  })
+);
+
 // HANDLE LOGOUT
 app.get('/logout', (req, res, next) => {
   req.logout(function (err) {
@@ -84,7 +100,6 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, cb) => {
       try {
-        console.log(profile);
         const result = await db.query('SELECT * FROM users WHERE email = $1', [
           profile.email,
         ]);
@@ -96,6 +111,41 @@ passport.use(
               profile.displayName,
               profile.email,
               'google',
+              new Date(),
+            ]
+          );
+          return cb(null, newUser.rows[0]);
+        } else {
+          return cb(null, result.rows[0]);
+        }
+      } catch (err) {
+        return cb(err);
+      }
+    }
+  )
+);
+
+// TWITTER STRATEGY
+passport.use(
+  new TwitterStrategy(
+    {
+      consumerKey: process.env.TWITTER_CONSUMER_KEY,
+      consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+      callbackURL: 'http://localhost:3000/auth/twitter/dashboard',
+    },
+    async (token, tokenSecret, profile, cb) => {
+      try {
+        const result = await db.query('SELECT * FROM users WHERE email = $1', [
+          profile.username,
+        ]);
+        if (result.rowCount === 0) {
+          const newUser = await db.query(
+            'INSERT INTO users (picture, name, email, password, date) VALUES ($1, $2, $3, $4, $5)',
+            [
+              profile.photos[0].value,
+              profile.displayName,
+              profile.username,
+              'twitter',
               new Date(),
             ]
           );
