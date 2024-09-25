@@ -51,12 +51,7 @@ app.get('/dashboard', (req, res) => {
   }
 });
 
-app.get(
-  '/auth/google',
-  passport.authenticate('google', {
-    scope: ['profile', 'email'],
-  })
-);
+app.get('/auth/google', passport.authenticate('google'));
 
 app.get(
   '/auth/google/dashboard',
@@ -97,6 +92,7 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: 'http://localhost:3000/auth/google/dashboard',
       userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
+      scope: ['profile', 'email'],
     },
     async (accessToken, refreshToken, profile, cb) => {
       try {
