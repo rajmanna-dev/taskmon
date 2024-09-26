@@ -1,4 +1,8 @@
-import { googleStrategy, twitterStrategy } from './config/passportConfig.js';
+import {
+  googleStrategy,
+  twitterStrategy,
+  facebookStrategy,
+} from './config/passportConfig.js';
 import db from './config/dbConfig.js';
 import session from 'express-session';
 import bodyParser from 'body-parser';
@@ -18,42 +22,30 @@ app.use(
     secret: process.env.SESSION_KEY,
     resave: false,
     saveUninitialized: true,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24,
+    },
   })
 );
 
 // MIDDLEWARES
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/', (req, res) => {
-  res.render('index.ejs');
-});
-
-// PROTECT DASHBOARD ROUTE
-app.get('/dashboard', (req, res) => {
-  if (req.isAuthenticated()) {
-    res.render('dashboard.ejs');
-  } else {
-    res.redirect('/');
-  }
-});
-
+// AUTH ROUTES
 app.get('/auth/google', passport.authenticate('google'));
+app.get('/auth/twitter', passport.authenticate('twitter'));
+app.get('/auth/facebook', passport.authenticate('facebook'));
 
+// AUTHENTICATE DASHBOARD ROUTE
 app.get(
   '/auth/google/dashboard',
   passport.authenticate('google', {
     successRedirect: '/dashboard',
     failureRedirect: '/',
-  })
-);
-
-app.get(
-  '/auth/twitter',
-  passport.authenticate('twitter', {
-    scope: ['profile', 'email'],
   })
 );
 
@@ -65,6 +57,31 @@ app.get(
   })
 );
 
+app.get(
+  '/auth/facebook/dashboard',
+  passport.authenticate('facebook', {
+    successRedirect: '/dashboard',
+    failureRedirect: '/',
+  })
+);
+
+app.get('/', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.render('dashboard.ejs', { message: 'You are successfully logged in.' });
+  } else {
+    res.render('index.ejs');
+  }
+});
+
+// PROTECT DASHBOARD ROUTE
+app.get('/dashboard', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.render('dashboard.ejs', { message: 'You are successfully logged in.' });
+  } else {
+    res.render('index.ejs', { showModal: true });
+  }
+});
+
 // HANDLE LOGOUT
 app.get('/logout', (req, res, next) => {
   req.logout(function (err) {
@@ -73,11 +90,10 @@ app.get('/logout', (req, res, next) => {
   });
 });
 
-// GOOGLE STRATEGY
-passport.use(googleStrategy);
-
-// TWITTER STRATEGY
-passport.use(twitterStrategy);
+// USE STRATEGIES
+passport.use('google', googleStrategy);
+passport.use('twitter', twitterStrategy);
+passport.use('facebook', facebookStrategy);
 
 passport.serializeUser((user, cb) => {
   return cb(null, user.id);
@@ -92,7 +108,6 @@ passport.deserializeUser(async (id, cb) => {
   }
 });
 
-// RUN SERVER
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

@@ -1,6 +1,36 @@
 import GoogleStrategy from 'passport-google-oauth2';
+import FacebookStrategy from 'passport-facebook';
 import TwitterStrategy from 'passport-twitter';
 import db from './dbConfig.js';
+
+// FACEBOOK STRATEGY
+const facebookStrategy = new FacebookStrategy(
+  {
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: 'http://locahost:3000/auth/facebook/dashboard',
+    profileFields: ['id', 'displayName', 'photos', 'email'],
+  },
+  async (accessToken, refreshToken, profile, cb) => {
+    try {
+      console.log(profile);
+      const result = await db.query('SELECT * FROM users WHERE email = $1', [
+        profile.username,
+      ]);
+      if (result.rowCount === 0) {
+        const newUser = await db.query(
+          'INSERT INTO users (picture, name, email, password, date) VALUES ($1, $2, $3, $4, $5)',
+          [profile.photos[0].value, profile.username, 'facebook', new Date()]
+        );
+        return cb(null, newUser.rows[0]);
+      } else {
+        return cb(null, result.rows[0]);
+      }
+    } catch (err) {
+      return cb(err);
+    }
+  }
+);
 
 // GOOGLE STRATEGY
 const googleStrategy = new GoogleStrategy(
@@ -71,4 +101,4 @@ const twitterStrategy = new TwitterStrategy(
 );
 
 // EXPORT BOTH STRATEGIES
-export { googleStrategy, twitterStrategy };
+export { googleStrategy, twitterStrategy, facebookStrategy };
