@@ -1,11 +1,10 @@
-import GoogleStrategy from 'passport-google-oauth2';
-import TwitterStrategy from 'passport-twitter';
+import { googleStrategy, twitterStrategy } from './config/passportConfig.js';
+import db from './config/dbConfig.js';
 import session from 'express-session';
 import bodyParser from 'body-parser';
 import passport from 'passport';
 import express from 'express';
 import env from 'dotenv';
-import pg from 'pg';
 
 env.config();
 
@@ -27,16 +26,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(passport.initialize());
 app.use(passport.session());
-
-// DATABASE CONNECTION
-const db = new pg.Client({
-  user: process.env.PG_USER,
-  host: process.env.PG_HOST,
-  database: process.env.PG_DB,
-  password: process.env.PG_PASS,
-  port: process.env.PG_PORT,
-});
-db.connect();
 
 app.get('/', (req, res) => {
   res.render('index.ejs');
@@ -85,83 +74,22 @@ app.get('/logout', (req, res, next) => {
 });
 
 // GOOGLE STRATEGY
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/auth/google/dashboard',
-      userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
-      scope: ['profile', 'email'],
-    },
-    async (accessToken, refreshToken, profile, cb) => {
-      try {
-        const result = await db.query('SELECT * FROM users WHERE email = $1', [
-          profile.email,
-        ]);
-        if (result.rowCount === 0) {
-          const newUser = await db.query(
-            'INSERT INTO users (picture, name, email, password, date) VALUES ($1, $2, $3, $4, $5)',
-            [
-              profile.picture,
-              profile.displayName,
-              profile.email,
-              'google',
-              new Date(),
-            ]
-          );
-          return cb(null, newUser.rows[0]);
-        } else {
-          return cb(null, result.rows[0]);
-        }
-      } catch (err) {
-        return cb(err);
-      }
-    }
-  )
-);
+passport.use(googleStrategy);
 
 // TWITTER STRATEGY
-passport.use(
-  new TwitterStrategy(
-    {
-      consumerKey: process.env.TWITTER_CONSUMER_KEY,
-      consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-      callbackURL: 'http://localhost:3000/auth/twitter/dashboard',
-    },
-    async (token, tokenSecret, profile, cb) => {
-      try {
-        const result = await db.query('SELECT * FROM users WHERE email = $1', [
-          profile.username,
-        ]);
-        if (result.rowCount === 0) {
-          const newUser = await db.query(
-            'INSERT INTO users (picture, name, email, password, date) VALUES ($1, $2, $3, $4, $5)',
-            [
-              profile.photos[0].value,
-              profile.displayName,
-              profile.username,
-              'twitter',
-              new Date(),
-            ]
-          );
-          return cb(null, newUser.rows[0]);
-        } else {
-          return cb(null, result.rows[0]);
-        }
-      } catch (err) {
-        return cb(err);
-      }
-    }
-  )
-);
+passport.use(twitterStrategy);
 
 passport.serializeUser((user, cb) => {
-  return cb(null, user);
+  return cb(null, user.id);
 });
 
-passport.deserializeUser((user, cb) => {
-  return cb(null, user);
+passport.deserializeUser(async (id, cb) => {
+  try {
+    const result = await db.query('SELECT * FROM users WHERE id = $1', [id]);
+    cb(null, result.rows[0]);
+  } catch (err) {
+    cb(err);
+  }
 });
 
 // RUN SERVER
