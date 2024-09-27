@@ -14,17 +14,21 @@
     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
     <title>Taskmon</title>
   </head>
-  <body class="font-[Poppins] bg-[#f1faee]">
-    <section class="header-nav">
+  <body class="relative font-[Poppins] bg-[#f1faee]">
+    <section class="header-nav fixed top-0 left-0 right-0 z-50">
       <header
-        class="header-container h-10 flex items-center justify-center text-sm text-white bg-[#3a86ff]"
+        class="header-container h-10 text-center flex items-center justify-center text-sm text-white bg-[#3a86ff] max-sm:text-xs"
       >
-        <a href="#" class="announcement-link font-medium"
-          ><span class="announcement-text font-semibold">Announcement:</span>
-          1.0 launch, new improvements and bug fixes are here!
-        </a>
+        <p class="announcement-link font-semibold">
+          Announcement:
+          <a href="" class="font-medium"
+            >1.0 launch, new improvements and bug fixes are here!</a
+          >
+        </p>
       </header>
-      <nav class="navbar h-20 flex justify-between items-center px-4">
+      <nav
+        class="navbar h-20 flex justify-between items-center px-4 bg-[#f1faee]"
+      >
         <div class="logo-container w-[30%]">
           <a
             href="/"
@@ -35,7 +39,7 @@
             taskmon.com
           </a>
         </div>
-        <div class="menu-container w-[40%]">
+        <div class="menu-container w-[40%] max-sm:hidden">
           <ul class="menu-list flex justify-evenly text-gray-500">
             <li
               class="menu-item underline-offset-[1rem] decoration-2 hover:text-black hover:underline"
@@ -64,20 +68,57 @@
             </li>
           </ul>
         </div>
-        <div class="login-report-options w-[30%]">
+        <div class="login-report-options w-[30%] max-sm:hidden">
           <ul class="option-list flex justify-end">
             <li
-              class="option-item px-3 py-2 rounded bg-[#3a86ff] border border-[#3a86ff] text-white hover:text-[#3a86ff] hover:bg-transparent"
+              class="btn-login option-item px-3 py-2 rounded font-medium cursor-pointer bg-[#3a86ff] border border-[#3a86ff] text-white hover:text-[#3a86ff] hover:bg-transparent"
             >
-              <a href="#" class="font-medium">Register/Login</a>
+              Register/Login
             </li>
             <li
               class="option-item px-3 py-2 ml-2 rounded border bg-[#e63946] border-[#e63946] text-white hover:text-[#e63946] hover:bg-transparent"
             >
-              <a href="#" class="font-medium">Bug report</a>
+              <a href="mailto:wts.devs@yahoo.com" class="font-medium"
+                >Bug report</a
+              >
             </li>
           </ul>
         </div>
+        <div class="hamburger-icon sm:hidden">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-align-justify"
+          >
+            <line x1="3" x2="21" y1="6" y2="6" />
+            <line x1="3" x2="21" y1="12" y2="12" />
+            <line x1="3" x2="21" y1="18" y2="18" />
+          </svg>
+        </div>
       </nav>
+      <div class="navbar-mobile px-6 bg-[#f1faee] text-black hidden sm:hidden">
+        <div class="nav-items py-2">
+          <ul class="menu-list">
+            <li class="mb-2"><a href="#">Get started</a></li>
+            <li class="my-2">
+              <a href="https://github.com/rajmanna-dev/taskmon" target="_blank"
+                >Contributions</a
+              >
+            </li>
+            <li class="my-2"><a href="#">About</a></li>
+            <li class="my-2"><a href="#">Contact</a></li>
+            <li class="my-2"><a href="#">Login</a></li>
+            <li class="my-2"><a href="#">Bug report</a></li>
+          </ul>
+        </div>
+      </div>
     </section>
-
+  </body>
+</html>

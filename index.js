@@ -67,7 +67,7 @@ app.get(
 
 app.get('/', (req, res) => {
   if (req.isAuthenticated()) {
-    res.render('dashboard.ejs', { message: 'You are successfully logged in.' });
+    res.redirect('/dashboard');
   } else {
     res.render('index.ejs');
   }
@@ -78,7 +78,9 @@ app.get('/dashboard', (req, res) => {
   if (req.isAuthenticated()) {
     res.render('dashboard.ejs', { message: 'You are successfully logged in.' });
   } else {
-    res.render('index.ejs', { showModal: true });
+    res.render('index.ejs', {
+      message: 'Please login to continue with Taskmon',
+    });
   }
 });
 
