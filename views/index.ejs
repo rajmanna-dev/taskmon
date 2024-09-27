@@ -1,10 +1,62 @@
 <%- include('partials/header.ejs') %>
-<section class="hero-container px-4 my-5">
-  <div class="hero-grid-container grid grid-cols-2">
+<!-- START MODAL -->
+<div
+  class="modal-container left-0 top-0 fixed w-full h-full z-50 hidden"
+  id="loginModal"
+  style="background-color: rgba(0, 0, 0, 0.4)"
+>
+  <div
+    class="modal-content relative mx-auto my-40 py-6 px-2 w-[28%] flex flex-col items-center rounded-md bg-white max-sm:w-[320px]"
+  >
+    <div
+      class="btn-close absolute right-2 top-0 text-4xl cursor-pointer hover:text-gray-400"
+    >
+      &times;
+    </div>
+    <h1 class="font-bold text-3xl my-2">Hello!</h1>
+    <p class="text-gray-400 text-center font-medium mb-4 px-2">
+      Use your social accounts to continue with Taskmon.
+    </p>
+    <a
+      role="button"
+      href="/auth/twitter"
+      class="twitter py-2 text-lg font-medium text-center my-1 rounded-lg w-[280px] bg-gray-300 hover:bg-[#3a86ff] hover:text-white"
+      >Continue with Twitter</a
+    >
+    <a
+      role="button"
+      href="/auth/google"
+      class="google py-2 text-lg font-medium text-center my-1 rounded-lg w-[280px] bg-gray-300 hover:bg-[#3a86ff] hover:text-white"
+      >Continue with Google</a
+    >
+    <a
+      role="button"
+      href="/auth/facebook"
+      class="facebook py-2 text-lg font-medium text-center my-1 rounded-lg w-[280px] bg-gray-300 hover:bg-[#3a86ff] hover:text-white"
+      >Continue with Facebook</a
+    >
+    <p class="mt-3 text-xs text-center text-gray-400">
+      By continuing, you agreed to our
+      <a href="#" class="text-black">Terms of Service.</a>
+    </p>
+    <p class="text-xs text-center text-gray-400">
+      Read our <a href="#" class="text-black">Privacy Policy.</a>
+    </p>
+  </div>
+</div>
+<!-- END MODAL -->
+<section class="hero-container px-4 mt-36 max-sm:mt-32">
+  <div
+    class="hero-grid-container grid grid-cols-2 max-sm:flex max-sm:flex-col-reverse"
+  >
     <div class="hero-left-container">
-      <h1 class="hero-heading text-[4rem] leading-tight tracking-tighter">
-        <span class="text-[4.56rem]">Make Every Day</span> Count
-        <span class="text-[#e63946]">with Simple Planning</span>
+      <h1
+        class="hero-heading text-[4.56rem] leading-tight tracking-tighter max-sm:text-[2.85rem]"
+      >
+        Make Every Day Count
+        <span class="text-[4rem] max-sm:text-[2.45rem] text-[#e63946]"
+          >with Simple Planning</span
+        >
       </h1>
       <div class="hero-tags my-7 p-1 border-l-4 border-l-[#e63946]">
         <span class="py-1 px-2 ml-1.5 bg-red-100"
@@ -28,7 +80,7 @@
     </div>
     <div class="hero-right-container">
       <div
-        class="intro-video-container mr-4 rounded-sm ring-[15px] ring-[#e9edc9]"
+        class="intro-video-container mr-4 rounded-sm ring-[15px] ring-[#e9edc9] max-sm:mr-0 max-sm:ring-4 max-sm:mb-1.5"
       >
         <video class="rounded-md" width="100%" preload="auto" controls>
           <source src="/video/intro.mp4" type="video/mp4" />
@@ -38,14 +90,20 @@
     </div>
   </div>
 </section>
-<section class="features-container mx-4 my-24">
-  <h2 class="text-center font-medium text-4xl text-gray-400">Features</h2>
+<section class="features-container mx-4 my-24 max-sm:my-16">
+  <h2 class="text-center font-medium text-4xl text-gray-400 max-sm:text-3xl">
+    Features
+  </h2>
   <div class="feature-grid-container grid grid-rows-3 my-10">
     <!-- Feature 1 -->
-    <div class="feature p-24 my-10 flex justify-between bg-[#edede9]">
-      <div class="left w-[450px]">
-        <h3 class="text-4xl font-medium">Stay focused, get organized</h3>
-        <p class="my-5 leading-loose">
+    <div
+      class="feature p-24 my-10 flex justify-between bg-[#edede9] max-sm:p-6 max-sm:my-6 max-sm:flex-col-reverse max-sm:justify-normal"
+    >
+      <div class="left w-[450px] max-sm:w-auto">
+        <h3 class="text-4xl font-medium max-sm:text-2xl max-sm:my-4">
+          Stay focused, get organized
+        </h3>
+        <p class="my-6 leading-loose max-sm:leading-snug max-sm:text-sm">
           With features like task creation, editing, and deletion, users can
           easily keep track of their to-do lists. Tasks can be grouped by
           categories, deadlines can be set, and priorities can be adjusted to
@@ -54,7 +112,7 @@
           goals.
         </p>
         <a
-          href="#"
+          href="/dashboard"
           class="py-3 px-5 font-bold rounded-md text-white bg-[#e65946] border border-[#e65946] hover:bg-transparent hover:text-[#e65946]"
           >Check it out</a
         >
@@ -64,10 +122,14 @@
       </div>
     </div>
     <!-- Feature 2 -->
-    <div class="feature p-24 my-10 flex justify-between bg-[#edede9]">
-      <div class="left w-[450px]">
-        <h3 class="text-4xl font-medium">Analyze everything in one place</h3>
-        <p class="my-5 leading-loose">
+    <div
+      class="feature p-24 my-10 flex justify-between bg-[#edede9] max-sm:p-6 max-sm:my-6 max-sm:flex-col-reverse max-sm:justify-normal"
+    >
+      <div class="left w-[450px] max-sm:w-auto">
+        <h3 class="text-4xl font-medium max-sm:text-2xl max-sm:my-4">
+          Analyze everything in one place
+        </h3>
+        <p class="my-6 leading-loose max-sm:leading-snug max-sm:text-sm">
           Our powerful all-in-one dashboard empowers users to see the bigger
           picture. With visual progress tracking, task summaries, and analytics,
           you get a clear view of what’s done and what’s pending. Custom
@@ -75,7 +137,7 @@
           of responsibilities, everything remains manageable.
         </p>
         <a
-          href="#"
+          href="/dashboard"
           class="py-3 px-5 font-bold rounded-md text-white bg-[#e65946] border border-[#e65946] hover:bg-transparent hover:text-[#e65946]"
           >Check it out</a
         >
@@ -85,12 +147,14 @@
       </div>
     </div>
     <!-- Feature 3 -->
-    <div class="feature p-24 my-10 flex justify-between bg-[#edede9]">
-      <div class="left w-[450px]">
-        <h3 class="text-4xl font-medium">
+    <div
+      class="feature p-24 my-10 flex justify-between bg-[#edede9] max-sm:p-6 max-sm:my-6 max-sm:flex-col-reverse max-sm:justify-normal"
+    >
+      <div class="left w-[450px] max-sm:w-auto">
+        <h3 class="text-4xl font-medium max-sm:text-2xl max-sm:my-4">
           Celebrate Your Productivity Milestones
         </h3>
-        <p class="my-5 leading-loose">
+        <p class="my-6 leading-loose max-sm:leading-snug max-sm:text-sm">
           The award system is designed to recognize consistent effort, whether
           you're tackling daily tasks, long-term projects, or anything in
           between. As you hit new task completion limits, you'll be notified of
@@ -99,7 +163,7 @@
           showcasing your productivity journey.
         </p>
         <a
-          href="#"
+          href="/dashboard"
           class="py-3 px-5 font-bold rounded-md text-white bg-[#e65946] border border-[#e65946] hover:bg-transparent hover:text-[#e65946]"
           >Check it out</a
         >
@@ -111,7 +175,7 @@
   </div>
 </section>
 <section class="testimonial-container mx-4 my-16">
-  <h2 class="text-center font-medium text-4xl text-gray-400">
+  <h2 class="text-center font-medium text-4xl text-gray-400 max-sm:text-3xl">
     Frequently asked questions
   </h2>
 </section>
