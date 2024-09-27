@@ -15,7 +15,7 @@
     <title>Taskmon</title>
   </head>
   <body class="relative font-[Poppins] bg-[#f1faee]">
-    <section class="header-nav fixed top-0 left-0 right-0 z-40">
+    <section class="header-nav fixed top-0 left-0 right-0 z-50">
       <header
         class="header-container h-10 text-center flex items-center justify-center text-sm text-white bg-[#3a86ff] max-sm:text-xs"
       >
@@ -85,26 +85,40 @@
           </ul>
         </div>
         <div class="hamburger-icon sm:hidden">
-          <a href="#triggerMenu" class="nav-icon" id="nav-icon">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-align-justify"
-            >
-              <line x1="3" x2="21" y1="6" y2="6" />
-              <line x1="3" x2="21" y1="12" y2="12" />
-              <line x1="3" x2="21" y1="18" y2="18" />
-            </svg>
-          </a>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-align-justify"
+          >
+            <line x1="3" x2="21" y1="6" y2="6" />
+            <line x1="3" x2="21" y1="12" y2="12" />
+            <line x1="3" x2="21" y1="18" y2="18" />
+          </svg>
         </div>
       </nav>
+      <div class="navbar-mobile px-6 bg-[#f1faee] text-black hidden sm:hidden">
+        <div class="nav-items py-2">
+          <ul class="menu-list">
+            <li class="mb-2"><a href="#">Get started</a></li>
+            <li class="my-2">
+              <a href="https://github.com/rajmanna-dev/taskmon" target="_blank"
+                >Contributions</a
+              >
+            </li>
+            <li class="my-2"><a href="#">About</a></li>
+            <li class="my-2"><a href="#">Contact</a></li>
+            <li class="my-2"><a href="#">Login</a></li>
+            <li class="my-2"><a href="#">Bug report</a></li>
+          </ul>
+        </div>
+      </div>
     </section>
   </body>
 </html>

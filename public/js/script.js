@@ -10,3 +10,8 @@ $(window).on('click', function (e) {
   if (e.target == $('.modal-container')[0])
     $('.modal-container').addClass('hidden');
 });
+
+// Hamburger icon
+$('.hamburger-icon').on('click', function () {
+  $('.navbar-mobile').toggleClass('hidden');
+});
