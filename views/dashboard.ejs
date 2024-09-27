@@ -3,9 +3,84 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/output.css" />
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
+    <title>Dashboard - Taskmon</title>
   </head>
-  <body>
-    <h1>Dashboard</h1>
+  <body class="bg-[#0b090a] h-[100vh]">
+    <div class="dashboard-container h-full grid grid-cols-12">
+      <div
+        class="left-container flex flex-col items-center col-span-2 bg-[#161a1d] text-white"
+      >
+        <div class="user-profile-container flex flex-col items-center my-8">
+          <img
+            src="<%= user.picture %>"
+            alt="<%= user.name %> Profile Picture"
+            class="rounded-full aspect-auto max-w-[96px]"
+          />
+
+          <p class="user-displayname my-2 font-semibold text-xl">
+            <%= user.name %>
+          </p>
+          <p class="joining-date flex items-center text-gray-500">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-calendar-days"
+            >
+              <path d="M8 2v4" />
+              <path d="M16 2v4" />
+              <rect width="18" height="18" x="3" y="4" rx="2" />
+              <path d="M3 10h18" />
+              <path d="M8 14h.01" />
+              <path d="M12 14h.01" />
+              <path d="M16 14h.01" />
+              <path d="M8 18h.01" />
+              <path d="M12 18h.01" />
+              <path d="M16 18h.01" />
+            </svg>
+            <span class="ml-2">
+              Joined <%= new Date(user.date).toLocaleDateString('en-US', {year:
+              'numeric', month: 'short'}) %>
+            </span>
+          </p>
+        </div>
+        <hr class="w-[80%] border-gray-500" />
+        <div class="category-container w-full my-6">
+          <h2 class="mb-2 text-2xl font-semibold text-center text-white">
+            Categories
+          </h2>
+          <ul class="category-list text-center my-6">
+            <li class="my-4">
+              <a class="font-medium text-lg hover:text-gray-500" href="#"
+                >My Day</a
+              >
+            </li>
+            <li class="my-4">
+              <a class="font-medium text-lg hover:text-gray-500" href="#"
+                >Personal</a
+              >
+            </li>
+            <li class="my-4">
+              <a class="font-medium text-lg hover:text-gray-500" href="#"
+                >Work</a
+              >
+            </li>
+            <li class="my-4">
+              <a class="font-medium text-lg hover:text-gray-500" href="#"
+                >Study</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

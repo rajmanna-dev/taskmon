@@ -73,14 +73,18 @@ app.get('/', (req, res) => {
   }
 });
 
-// PROTECT DASHBOARD ROUTE
-app.get('/dashboard', (req, res) => {
+app.get('/dashboard', async (req, res) => {
   if (req.isAuthenticated()) {
-    res.render('dashboard.ejs', { message: 'You are successfully logged in.' });
+    try {
+      const result = await db.query('SELECT * FROM tasks WHERE user_id = $1', [
+        parseInt(req.user.id),
+      ]);
+      res.render('dashboard.ejs', { user: req.user, tasks: result.rows });
+    } catch (err) {
+      console.log(err);
+    }
   } else {
-    res.render('index.ejs', {
-      message: 'Please login to continue with Taskmon',
-    });
+    res.redirect('/');
   }
 });
 
@@ -98,16 +102,11 @@ passport.use('twitter', twitterStrategy);
 passport.use('facebook', facebookStrategy);
 
 passport.serializeUser((user, cb) => {
-  return cb(null, user.id);
+  return cb(null, user);
 });
 
-passport.deserializeUser(async (id, cb) => {
-  try {
-    const result = await db.query('SELECT * FROM users WHERE id = $1', [id]);
-    cb(null, result.rows[0]);
-  } catch (err) {
-    cb(err);
-  }
+passport.deserializeUser(async (user, cb) => {
+  cb(null, user);
 });
 
 app.listen(port, () => {
