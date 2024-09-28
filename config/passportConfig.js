@@ -3,24 +3,28 @@ import FacebookStrategy from 'passport-facebook';
 import TwitterStrategy from 'passport-twitter';
 import db from './dbConfig.js';
 
-// FACEBOOK STRATEGY
-const facebookStrategy = new FacebookStrategy(
+// TWITTER STRATEGY
+const twitterStrategy = new TwitterStrategy(
   {
-    clientID: process.env.FACEBOOK_APP_ID,
-    clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: 'http://locahost:3000/auth/facebook/dashboard',
-    profileFields: ['id', 'displayName', 'photos', 'email'],
+    consumerKey: process.env.TWITTER_CONSUMER_KEY,
+    consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+    callbackURL: 'http://localhost:3000/auth/twitter/dashboard',
   },
-  async (accessToken, refreshToken, profile, cb) => {
+  async (token, tokenSecret, profile, cb) => {
     try {
-      console.log(profile);
       const result = await db.query('SELECT * FROM users WHERE email = $1', [
         profile.username,
       ]);
       if (result.rowCount === 0) {
         const newUser = await db.query(
           'INSERT INTO users (picture, name, email, password, date) VALUES ($1, $2, $3, $4, $5)',
-          [profile.photos[0].value, profile.username, 'facebook', new Date()]
+          [
+            profile.photos[0].value,
+            profile.displayName,
+            profile.username,
+            'twitter',
+            new Date(),
+          ]
         );
         return cb(null, newUser.rows[0]);
       } else {
@@ -67,28 +71,24 @@ const googleStrategy = new GoogleStrategy(
   }
 );
 
-// TWITTER STRATEGY
-const twitterStrategy = new TwitterStrategy(
+// FACEBOOK STRATEGY
+const facebookStrategy = new FacebookStrategy(
   {
-    consumerKey: process.env.TWITTER_CONSUMER_KEY,
-    consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-    callbackURL: 'http://localhost:3000/auth/twitter/dashboard',
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: 'http://locahost:3000/auth/facebook/dashboard',
+    profileFields: ['id', 'displayName', 'photos', 'email'],
   },
-  async (token, tokenSecret, profile, cb) => {
+  async (accessToken, refreshToken, profile, cb) => {
     try {
+      console.log(profile);
       const result = await db.query('SELECT * FROM users WHERE email = $1', [
         profile.username,
       ]);
       if (result.rowCount === 0) {
         const newUser = await db.query(
           'INSERT INTO users (picture, name, email, password, date) VALUES ($1, $2, $3, $4, $5)',
-          [
-            profile.photos[0].value,
-            profile.displayName,
-            profile.username,
-            'twitter',
-            new Date(),
-          ]
+          [profile.photos[0].value, profile.username, 'facebook', new Date()]
         );
         return cb(null, newUser.rows[0]);
       } else {
@@ -100,5 +100,4 @@ const twitterStrategy = new TwitterStrategy(
   }
 );
 
-// EXPORT BOTH STRATEGIES
 export { googleStrategy, twitterStrategy, facebookStrategy };
