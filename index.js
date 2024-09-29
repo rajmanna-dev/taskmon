@@ -84,7 +84,9 @@ app.get('/dashboard', async (req, res) => {
       console.log(err);
     }
   } else {
-    res.redirect('/');
+    res.render('index.ejs', {
+      message: 'Please login to visit your dashboard',
+    });
   }
 });
 
@@ -102,11 +104,17 @@ passport.use('twitter', twitterStrategy);
 passport.use('facebook', facebookStrategy);
 
 passport.serializeUser((user, cb) => {
-  return cb(null, user);
+  return cb(null, user.id);
 });
 
-passport.deserializeUser(async (user, cb) => {
-  cb(null, user);
+passport.deserializeUser(async (id, cb) => {
+  try {
+    const result = await db.query('SELECT * FROM users WHERE id = $1', [id]);
+    const user = result.rows[0];
+    cb(null, user);
+  } catch (err) {
+    cb(err);
+  }
 });
 
 app.listen(port, () => {
