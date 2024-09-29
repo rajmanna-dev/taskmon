@@ -85,7 +85,7 @@ app.get('/dashboard', async (req, res) => {
     }
   } else {
     res.render('index.ejs', {
-      message: 'Please login to visit your dashboard',
+      message: 'Please login to visit your dashboard.',
     });
   }
 });

@@ -12,7 +12,9 @@
       <div
         class="left-container relative grid-rows-2 col-span-2 bg-[#161a1d] text-white"
       >
-        <div class="user-profile-container flex flex-col items-center my-8">
+        <div
+          class="user-profile-container flex flex-col items-center mt-8 mb-5"
+        >
           <img
             src="<%= user.picture %>"
             alt="<%= user.name %>"
@@ -53,6 +55,11 @@
               Joined <%= new Date(user.date).toLocaleDateString('en-US', {year:
               'numeric', month: 'short'}) %>
             </p>
+          </div>
+          <div
+            class="btn-logout mt-4 py-0.5 px-3 rounded bg-[#e63946] border border-red-600 hover:bg-transparent"
+          >
+            <a href="/logout" class="text-lg font-semibold">Log out</a>
           </div>
         </div>
         <hr class="w-[80%] mx-auto border-gray-500" />
