@@ -57,9 +57,9 @@
             </p>
           </div>
           <div
-            class="btn-logout mt-4 py-0.5 px-3 rounded bg-[#e63946] border border-red-600 hover:bg-transparent"
+            class="btn-logout mt-4 py-0.5 px-3 rounded bg-[#e63946] border border-[#e63946] hover:bg-transparent hover:text-[#e63946]"
           >
-            <a href="/logout" class="text-lg font-semibold">Log out</a>
+            <a href="/logout" class="font-medium">Log out</a>
           </div>
         </div>
         <hr class="w-[80%] mx-auto border-gray-500" />
@@ -67,9 +67,7 @@
           <h2 class="text-xl font-bold text-center mt-5 mb-3">Categories</h2>
           <ul class="category-list">
             <li class="py-3 hover:bg-[#e63946]">
-              <a
-                href="#"
-                class="relative text-lg flex justify-center items-center"
+              <a href="#" class="relative flex justify-center items-center"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -99,9 +97,7 @@
               >
             </li>
             <li class="py-3 hover:bg-[#e63946]">
-              <a
-                href="#"
-                class="relative text-lg flex justify-center items-center"
+              <a href="#" class="relative flex justify-center items-center"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -128,7 +124,7 @@
               </a>
             </li>
             <li class="py-3 hover:bg-[#e63946]">
-              <a href="#" class="text-lg flex justify-center items-center">
+              <a href="#" class="flex justify-center items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -149,7 +145,7 @@
               >
             </li>
             <li class="py-3 hover:bg-[#e63946]">
-              <a href="#" class="text-lg flex justify-center items-center">
+              <a href="#" class="flex justify-center items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -196,7 +192,7 @@
         </div>
       </div>
       <div class="middle-container grid grid-rows-12 gap-y-2 col-span-7">
-        <div class="middle-top-container row-span-1 bg-[#161a1d]">
+        <div class="middle-top-container row-span-1 bg-[#161a1d] rounded-b">
           <form
             action="/search"
             class="flex justify-evenly h-full items-center"
@@ -205,7 +201,7 @@
             <input
               type="text"
               name="search"
-              class="search-bar px-4 bg-inherit w-[80%] h-[90%] outline-none text-gray-500 text-lg font-medium"
+              class="search-bar px-4 bg-inherit w-[80%] h-[90%] outline-none text-gray-400 text-lg font-medium"
               placeholder="Search..."
               autocomplete="off"
             />
@@ -248,13 +244,14 @@
           <div class="cate-date">
             <h2 class="text-white text-3xl font-bold">My Day</h2>
             <p class="text-sm mt-3 text-gray-500">
-              Created at <%= user.date %>
+              Created at <%= new Date(user.date).toLocaleDateString('en-US',
+              {year: 'numeric', month: 'short', hour: 'numeric'}) %>
             </p>
           </div>
-          <div class="btn-add-task">
+          <div class="btn-add-task items-center">
             <a
               href="/new"
-              class="btn-add flex items-center text-lg text-white p-2 font-bold bg-[#e63946] hover:bg-red-600"
+              class="btn-add flex items-center text-lg text-white p-2 rounded font-bold bg-[#e63946] hover:bg-red-600"
               ><svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -265,39 +262,44 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="lucide lucide-plus mr-1"
+                class="lucide lucide-plus"
               >
                 <path d="M5 12h14" />
                 <path d="M12 5v14" /></svg
-              >Add</a
-            >
+            ></a>
           </div>
         </div>
         <div
-          class="middle-statistics-panel row-span-2 grid grid-cols-3 gap-x-3"
+          class="middle-statistics-panel row-span-2 grid grid-cols-4 gap-x-3"
         >
           <div
-            class="panel flex flex-col justify-center items-center bg-[#161a1d]"
+            class="panel flex flex-col justify-center items-center text-gray-400 bg-[#161a1d]"
           >
-            <h3 class="text-white font-medium">Total</h3>
-            <p class="text-gray-400 text-3xl">15</p>
+            <h3 class="font-medium">Pending Tasks</h3>
+            <p class="text-4xl">150</p>
           </div>
           <div
-            class="panel flex flex-col justify-center items-center bg-[#161a1d]"
+            class="panel flex flex-col justify-center items-center text-red-400 bg-[#161a1d]"
           >
-            <h3 class="text-white font-medium">Impotent</h3>
-            <p class="text-gray-400 text-3xl">15</p>
+            <h3 class="font-medium">Impotent Tasks</h3>
+            <p class="text-4xl">50</p>
           </div>
           <div
-            class="panel flex flex-col justify-center items-center bg-[#161a1d]"
+            class="panel flex flex-col justify-center items-center text-green-400 bg-[#161a1d]"
           >
-            <h3 class="text-white font-medium">Completed</h3>
-            <p class="text-gray-400 text-3xl">15</p>
+            <h3 class="font-medium">Completed Tasks</h3>
+            <p class="text-4xl">15</p>
+          </div>
+          <div
+            class="panel flex flex-col justify-center items-center text-white bg-[#161a1d]"
+          >
+            <h3 class="font-medium">Completion Rate</h3>
+            <p class="text-4xl">10</p>
           </div>
         </div>
       </div>
       <div class="right-container col-span-3 bg-[#161a1d]">
-        <div class="calender-container"></div>
+        <div class="motivation-container"></div>
       </div>
     </div>
   </body>
