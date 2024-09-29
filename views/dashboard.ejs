@@ -8,26 +8,30 @@
     <title>Dashboard - todoKeeper</title>
   </head>
   <body class="bg-[#0b090a] h-[100vh]">
-    <div class="dashboard-container grid grid-cols-12 gap-x-2 h-full">
+    <div
+      class="dashboard-container grid grid-cols-12 gap-x-2 h-full max-sm:grid-cols-1 max-sm:gap-0"
+    >
       <div
         class="left-container relative grid-rows-2 col-span-2 bg-[#161a1d] text-white"
       >
         <div
-          class="user-profile-container flex flex-col items-center mt-8 mb-5"
+          class="user-profile-container flex flex-col items-center mt-8 mb-5 max-sm:flex-row max-sm:my-2 max-sm:justify-between max-sm:mx-2"
         >
           <img
             src="<%= user.picture %>"
             alt="<%= user.name %>"
-            class="rounded-md max-w-[96px]"
+            class="rounded-md max-w-[96px] max-sm:max-w-[40px]"
           />
 
           <a
             href="/user/account/<%= user.email %>"
-            class="user-displayname my-2 font-semibold text-xl"
+            class="user-displayname my-2 font-semibold text-xl max-sm:flex-auto max-sm:ml-2"
           >
             <%= user.name %>
           </a>
-          <div class="joining-date flex items-center text-gray-500">
+          <div
+            class="joining-date flex items-center text-gray-500 max-sm:hidden"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -57,17 +61,21 @@
             </p>
           </div>
           <div
-            class="btn-logout mt-4 py-0.5 px-3 rounded bg-[#e63946] border border-[#e63946] hover:bg-transparent hover:text-[#e63946]"
+            class="btn-logout mt-4 py-0.5 px-3 rounded bg-[#e63946] border border-[#e63946] hover:bg-transparent hover:text-[#e63946] max-sm:mt-0"
           >
             <a href="/logout" class="font-medium">Log out</a>
           </div>
         </div>
-        <hr class="w-[80%] mx-auto border-gray-500" />
-        <div class="categories-container">
-          <h2 class="text-xl font-bold text-center mt-5 mb-3">Categories</h2>
-          <ul class="category-list">
+        <hr class="w-[80%] mx-auto border-gray-500 max-sm:w-full" />
+        <div class="categories-container max-sm:mx-2">
+          <h2 class="text-xl font-bold text-center mt-5 mb-3 max-sm:text-left">
+            Categories
+          </h2>
+          <ul class="category-list max-sm:flex max-sm:justify-evenly">
             <li class="py-3 hover:bg-[#e63946]">
-              <a href="#" class="relative flex justify-center items-center"
+              <a
+                href="#"
+                class="relative flex justify-center items-center max-sm:flex-col"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -78,7 +86,7 @@
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="lucide lucide-sun mr-2"
+                  class="lucide lucide-sun mr-2 max-sm:mr-0"
                 >
                   <circle cx="12" cy="12" r="4" />
                   <path d="M12 2v2" />
@@ -91,13 +99,15 @@
                   <path d="m19.07 4.93-1.41 1.41" /></svg
                 >My Day
                 <span
-                  class="absolute right-5 flex justify-center items-center w-5 h-5 text-sm rounded-full circle bg-gray-500"
+                  class="absolute right-5 flex justify-center items-center w-5 h-5 text-sm rounded-full circle bg-gray-500 max-sm:-right-1 max-sm:-top-2"
                   >0</span
                 ></a
               >
             </li>
             <li class="py-3 hover:bg-[#e63946]">
-              <a href="#" class="relative flex justify-center items-center"
+              <a
+                href="#"
+                class="relative flex justify-center items-center max-sm:flex-col"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -108,7 +118,7 @@
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="lucide lucide-binoculars mr-2"
+                  class="lucide lucide-binoculars mr-2 max-sm:mr-0"
                 >
                   <path d="M10 10h4" />
                   <path d="M19 7V4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v3" />
@@ -124,7 +134,10 @@
               </a>
             </li>
             <li class="py-3 hover:bg-[#e63946]">
-              <a href="#" class="flex justify-center items-center">
+              <a
+                href="#"
+                class="flex justify-center items-center max-sm:flex-col"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -135,7 +148,7 @@
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="lucide lucide-briefcase-business mr-2"
+                  class="lucide lucide-briefcase-business mr-2 max-sm:mr-0"
                 >
                   <path d="M12 12h.01" />
                   <path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
@@ -145,7 +158,10 @@
               >
             </li>
             <li class="py-3 hover:bg-[#e63946]">
-              <a href="#" class="flex justify-center items-center">
+              <a
+                href="#"
+                class="flex justify-center items-center max-sm:flex-col"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -156,7 +172,7 @@
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="lucide lucide-library-big mr-2"
+                  class="lucide lucide-library-big mr-2 max-sm:mr-0"
                 >
                   <rect width="8" height="18" x="3" y="3" rx="1" />
                   <path d="M7 3v18" />
@@ -169,7 +185,7 @@
           </ul>
         </div>
         <div
-          class="btn-add-category absolute bottom-0 left-0 right-0 py-3 bg-[#e63946] hover:bg-red-600"
+          class="btn-add-category absolute bottom-0 left-0 right-0 py-3 bg-[#e63946] hover:bg-red-600 max-sm:relative"
         >
           <a href="#" class="btn-add flex justify-center"
             ><svg
@@ -192,7 +208,9 @@
         </div>
       </div>
       <div class="middle-container grid grid-rows-12 gap-y-2 col-span-7">
-        <div class="middle-top-container row-span-1 bg-[#161a1d] rounded-b">
+        <div
+          class="middle-top-container row-span-1 bg-[#161a1d] rounded-b max-sm:mt-1"
+        >
           <form
             action="/search"
             class="flex justify-evenly h-full items-center"
@@ -240,10 +258,12 @@
             ></a>
           </form>
         </div>
-        <div class="middle-header-container flex justify-between row-span-2">
+        <div
+          class="middle-header-container flex justify-between row-span-2 max-sm:mx-2"
+        >
           <div class="cate-date">
             <h2 class="text-white text-3xl font-bold">My Day</h2>
-            <p class="text-sm mt-3 text-gray-500">
+            <p class="text-sm mt-3 text-gray-500 max-sm:mt-1">
               Created at <%= new Date(user.date).toLocaleDateString('en-US',
               {year: 'numeric', month: 'short', hour: 'numeric'}) %>
             </p>
@@ -270,31 +290,31 @@
           </div>
         </div>
         <div
-          class="middle-statistics-panel row-span-2 grid grid-cols-4 gap-x-3"
+          class="middle-statistics-panel row-span-2 grid grid-cols-4 gap-x-3 max-sm:gap-x-0.5"
         >
           <div
             class="panel flex flex-col justify-center items-center text-gray-400 bg-[#161a1d]"
           >
-            <h3 class="font-medium">Pending Tasks</h3>
-            <p class="text-4xl">150</p>
+            <h3 class="font-medium max-sm:text-center">Pending Tasks</h3>
+            <p class="text-4xl max-sm:text-2xl">150</p>
           </div>
           <div
             class="panel flex flex-col justify-center items-center text-red-400 bg-[#161a1d]"
           >
-            <h3 class="font-medium">Impotent Tasks</h3>
-            <p class="text-4xl">50</p>
+            <h3 class="font-medium max-sm:text-center">Impotent Tasks</h3>
+            <p class="text-4xl max-sm:text-2xl">50</p>
           </div>
           <div
             class="panel flex flex-col justify-center items-center text-green-400 bg-[#161a1d]"
           >
-            <h3 class="font-medium">Completed Tasks</h3>
-            <p class="text-4xl">15</p>
+            <h3 class="font-medium max-sm:text-center">Completed Tasks</h3>
+            <p class="text-4xl max-sm:text-2xl">15</p>
           </div>
           <div
             class="panel flex flex-col justify-center items-center text-white bg-[#161a1d]"
           >
-            <h3 class="font-medium">Completion Rate</h3>
-            <p class="text-4xl">10</p>
+            <h3 class="font-medium max-sm:text-center">Completion Rate</h3>
+            <p class="text-4xl max-sm:text-2xl">10</p>
           </div>
         </div>
       </div>
